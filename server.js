@@ -20,11 +20,20 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (req, res) => {
+  req.logout();
   res.render('index');
+});
+
+app.get('/auth.logout', (req, res) => {
+  res.render('logout');
 });
 
 app.use('/auth', require('./routes/auth.routes'));
 app.use('/user', require('./routes/user.routes'));
+
+app.use('/', (req, res) => {
+  res.status(404).render('notFound');
+});
 
 app.listen('8000', () => {
   console.log('Server is running on port: 8000');
